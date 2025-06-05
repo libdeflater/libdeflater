@@ -8,8 +8,8 @@ license = "Apache-2.0"
 readme = "README.md"
 keywords = ["gzip", "zlib", "deflate", "encoding"]
 categories = ["compression", "api-bindings"]
-repository = "https://github.com/adamkewley/libdeflater"
-homepage = "https://github.com/adamkewley/libdeflater"
+repository = "https://github.com/libdeflater/libdeflater"
+homepage = "https://github.com/libdeflater/libdeflater"
 description = """
 Bindings to libdeflate for DEFLATE (de)compression exposed as non-streaming buffer
 operations. Contains bindings for raw deflate, zlib, and gzip data.

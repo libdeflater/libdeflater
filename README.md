@@ -3,7 +3,6 @@
 > Rust bindings to [libdeflate](https://github.com/ebiggers/libdeflate), a high-performance
 > library for working with gzip/zlib/deflate data.
 
-[![Build Status](https://travis-ci.org/adamkewley/libdeflater.svg?branch=master)](https://travis-ci.org/adamkewley/libdeflater)
 [![Crates.io](https://img.shields.io/crates/v/libdeflater.svg?maxAge=2592000)](https://crates.io/crates/libdeflater)
 [![Documentation](https://docs.rs/libdeflater/badge.svg)](https://docs.rs/libdeflater)
 
@@ -23,10 +22,9 @@ This is a thin library around libdeflate that:
 
 - Binds to libdeflate's C API with rust bindings (see [lib.rs](src/lib.rs))
 
-- Contains high-level integration tests to ensure the bindings work (see [integration_test.rs](https://github.com/adamkewley/libdeflater/blob/master/tests/integration_test.rs))
+- Contains high-level integration tests to ensure the bindings work (see [integration_test.rs](tests/integration_test.rs))
 
-- Contains [usage examples](https://github.com/adamkewley/libdeflater/tree/master/examples) and a
-  [benchmark suite](https://github.com/adamkewley/libdeflater/tree/master/benches). The benchmark
+- Contains [usage examples](examples) and a [benchmark suite](benches). The benchmark
   suite indicates a 2-3x speedup accross the Calgary and Canterbury corpuses (see [Benchmarks](#benchmarks) 
   section)
 

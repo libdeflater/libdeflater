@@ -97,7 +97,7 @@ fn read_fixture_deflate() -> Vec<u8> {
 #[test]
 fn test_decompression_error_derives_error() {
     let bd = DecompressionError::BadData;
-    let _e = (&bd) as &(dyn Error);
+    let _e = (&bd) as &dyn Error;
 }
 
 #[test]

@@ -405,6 +405,7 @@ pub struct Compressor {
     p: NonNull<libdeflate_compressor>,
 }
 unsafe impl Send for Compressor {}
+unsafe impl Sync for Compressor {}
 
 impl Default for Compressor {
     fn default() -> Self {

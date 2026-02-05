@@ -107,6 +107,7 @@ pub struct Decompressor {
     p: NonNull<libdeflate_decompressor>,
 }
 unsafe impl Send for Decompressor {}
+unsafe impl Sync for Decompressor {}
 
 /// An error that may be returned by one of the
 /// [`Decompressor`](struct.Decompressor.html)'s `decompress_*`

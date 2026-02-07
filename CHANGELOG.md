@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Upcoming Release]
 
+- Implemented the `Sync` trait for `Compressor` and `Decompressor` (#51, thanks @vbe0201).
+
 ## [1.25.0]
 
 - Updated libdeflate to v1.25 (#50, thanks @musicinmybrain)

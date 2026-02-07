@@ -107,6 +107,7 @@ pub struct Decompressor {
     p: NonNull<libdeflate_decompressor>,
 }
 unsafe impl Send for Decompressor {}
+unsafe impl Sync for Decompressor {}
 
 /// An error that may be returned by one of the
 /// [`Decompressor`](struct.Decompressor.html)'s `decompress_*`
@@ -404,6 +405,7 @@ pub struct Compressor {
     p: NonNull<libdeflate_compressor>,
 }
 unsafe impl Send for Compressor {}
+unsafe impl Sync for Compressor {}
 
 impl Default for Compressor {
     fn default() -> Self {

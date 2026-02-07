@@ -1,6 +1,6 @@
 [package]
 name = "libdeflater"
-version = "1.25.0"
+version = "1.25.1"
 authors = ["Adam Kewley <contact@adamkewley.com>"]
 edition = "2018"
 license = "Apache-2.0"
@@ -22,7 +22,7 @@ exclude = [
 ]
 
 [dependencies]
-libdeflate-sys = { version = "1.25.0", path = "libdeflate-sys" }
+libdeflate-sys = { version = "1.25.1", path = "libdeflate-sys" }
 
 [dev-dependencies]
 criterion = "0.3"

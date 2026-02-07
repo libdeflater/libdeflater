@@ -1,6 +1,6 @@
 [package]
 name = "libdeflate-sys"
-version = "1.25.0"
+version = "1.25.1"
 authors = ["Adam Kewley <contact@adamkewley.com>"]
 links = "libdeflate"
 edition = "2018"

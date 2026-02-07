@@ -559,9 +559,14 @@ impl Default for Crc {
 }
 
 impl Crc {
-    /// Returns a new `Crc` instance
+    /// Returns a new `Crc` instance (with initial value 0).
     pub const fn new() -> Crc {
         Crc { val: 0 }
+    }
+
+    /// Returns a new `Crc` instance with chosen initial value.
+    pub const fn with_initial(val: u32) -> Crc {
+        Crc { val }
     }
 
     /// Update the CRC with the bytes in `data`
@@ -606,6 +611,10 @@ impl Adler32 {
     /// Returns a new `Adler32` instance (with initial adler32 value 1, which is default for adler32)
     pub const fn new() -> Adler32 {
         Adler32 { val: 1 }
+    }
+    /// Returns a new `Adler32` instance with chosen initial value.
+    pub const fn with_initial(val: u32) -> Adler32 {
+        Adler32 { val }
     }
     /// Update the Adler32 with the bytes in `data`
     pub fn update(&mut self, data: &[u8]) {

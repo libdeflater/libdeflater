@@ -760,6 +760,24 @@ fn test_use_crc32_convenience_method_returns_same_crc32_as_flate2() {
     assert_eq!(flate2_crc32, libdeflate_crc32);
 }
 
+#[test]
+fn test_crc_with_initial_can_be_used_to_store_and_combine_crc_checksums() {
+    let input_data = read_fixture_content();
+    let first_half_slice = &input_data[0..input_data.len()/2];
+    let second_half_slice = &input_data[input_data.len()/2..];
+
+    let first_half_checksum = libdeflater::crc32(&first_half_slice);
+    let pieced_together_checksum = {
+        let mut checksummer = libdeflater::Crc::with_initial(first_half_checksum);
+        checksummer.update(&second_half_slice);
+        checksummer.sum()
+    };
+
+    let end_to_end_checksum = libdeflater::crc32(&input_data);
+
+    assert_eq!(pieced_together_checksum, end_to_end_checksum);
+}
+
 // adler32
 #[test]
 fn test_use_adler32_reader_to_compute_adler32_of_fixture_returns_same_adler32_as_adler32_crate(
@@ -803,3 +821,22 @@ fn test_use_adler32_convenience_method_returns_same_adler32_as_adler32_crate() {
 
     assert_eq!(crate_adler32, libdeflate_adler32);
 }
+
+#[test]
+fn test_adler32_with_initial_can_be_used_to_store_and_combine_adler_checksums() {
+    let input_data = read_fixture_content();
+    let first_half_slice = &input_data[0..input_data.len()/2];
+    let second_half_slice = &input_data[input_data.len()/2..];
+
+    let first_half_checksum = libdeflater::adler32(&first_half_slice);
+    let pieced_together_checksum = {
+        let mut checksummer = libdeflater::Adler32::with_initial(first_half_checksum);
+        checksummer.update(&second_half_slice);
+        checksummer.sum()
+    };
+
+    let end_to_end_checksum = libdeflater::adler32(&input_data);
+
+    assert_eq!(pieced_together_checksum, end_to_end_checksum);
+}
+

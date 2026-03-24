@@ -50,8 +50,8 @@ Benchmark data is from both the [Calgary Corpus](https://en.wikipedia.org/wiki/C
 benchmark tables below were made with this set of steps:
 
 ```bash
-wget http://www.data-compression.info/files/corpora/largecalgarycorpus.zip
-unzip -d bench_data largecalgarycorpus.zip
+wget http://corpus.canterbury.ac.nz/resources/calgary.tar.gz
+tar -xzf calgary.tar.gz -C bench_data
 wget http://corpus.canterbury.ac.nz/resources/cantrbry.zip
 unzip -d bench_data cantrbry.zip
 

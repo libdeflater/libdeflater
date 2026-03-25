@@ -51,7 +51,7 @@ benchmark tables below were made with this set of steps:
 
 ```bash
 wget http://corpus.canterbury.ac.nz/resources/calgary.tar.gz
-tar -xzf calgary.tar.gz -C bench_data
+mkdir -p bench_data && tar -xzf calgary.tar.gz -C bench_data
 wget http://corpus.canterbury.ac.nz/resources/cantrbry.zip
 unzip -d bench_data cantrbry.zip
 

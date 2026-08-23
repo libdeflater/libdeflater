@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Upcoming Release]
 
+## [1.26.0]
+
+- Updated libdeflate to v1.26
+
 ## [1.25.2] - 2026/02/08
 
 - Added `Crc::with_initial` and `Adler32::with_initial` constructors (#52, thanks @vbe0201).

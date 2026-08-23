@@ -188,6 +188,7 @@ mod tests {
                                                  out_data.len());
             assert_ne!(sz, 0);
             assert!(sz < 100);
+            libdeflate_free_compressor(compressor);
         }
     }
 

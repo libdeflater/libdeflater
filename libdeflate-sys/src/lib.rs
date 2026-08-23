@@ -161,7 +161,9 @@ mod tests {
     #[test]
     fn making_compressor_with_negative_compression_lvl_fails() {
         unsafe {
-            let ptr = libdeflate_alloc_compressor(-1);
+            // Since 1.26, compression level -1 is a valid alias for the default compression level.
+            // Other negative compression levels should still fail.
+            let ptr = libdeflate_alloc_compressor(-2);
             assert!(ptr.is_null());
         }
     }

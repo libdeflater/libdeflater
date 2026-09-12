@@ -9,7 +9,7 @@ fn main() {
     if pkg_config::Config::new()
         .print_system_libs(false)
         .cargo_metadata(true)
-        .exactly_version("1.24")
+        .exactly_version("1.26")
         .probe("libdeflate")
         .is_ok()
     {

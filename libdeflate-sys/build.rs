@@ -97,7 +97,6 @@ fn libdeflate_dynamic() -> bool {
                 let num = rest.parse::<u16>().ok()?;
                 minor.replace(num);
                 if major.is_some() { break; }
-                continue;
             }
         }
 

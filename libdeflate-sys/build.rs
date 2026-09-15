@@ -6,7 +6,15 @@ fn main() {
     let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
 
     #[cfg(feature = "dynamic")]
-    if libdeflate_dynamic() { return; }
+    if pkg_config::Config::new()
+        .print_system_libs(false)
+        .cargo_metadata(true)
+        .atleast_version("1.23")
+        .probe("libdeflate")
+        .is_ok()
+    {
+        return;
+    }
     else {
         println!("cargo:warning=Dynamic linking failed; falling back to static build.");
     }
@@ -46,88 +54,4 @@ fn main() {
     fs::copy(src.join("libdeflate.h"), include.join("libdeflate.h")).unwrap();
     println!("cargo:root={}", dst.display());
     println!("cargo:include={}", include.display());
-}
-
-#[cfg(feature = "dynamic")]
-/// # Link to System Copy?
-///
-/// Returns `true` if `pkg-config` was able to link against the system's
-/// copy of `libdeflate`, mooting the need to build it from source.
-fn libdeflate_dynamic() -> bool {
-    /// # Strip Prefix and Trailing Whitespace.
-    ///
-    /// This method strips the `prefix` _and_ any whitespace that follows,
-    /// returning the remainder if both `prefix` and whitespace were present.
-    ///
-    /// (`libdeflate` doesn't use whitespace consistently; we shouldn't assume
-    /// spaces will always be spaces, tabs always tabs.)
-    fn strip_prefix_and_ws<'a>(line: &'a str, prefix: &'static str) -> Option<&'a str> {
-        // First strip the prefix.
-        let line = line.strip_prefix(prefix)?;
-
-        // Grab the current length, then trim.
-        let len_pretrim = line.len();
-        let line = line.trim_start();
-
-        // Return the remainder if anything was trimmed.
-        if line.len() == len_pretrim { None }
-        else { Some(line) }
-    }
-
-    /// # Parse Vendored Libdeflate Version.
-    ///
-    /// Parse and return the `MAJOR.MINOR` version string from `libdeflate.h`.
-    fn libdeflate_version() -> Option<String> {
-        let raw = fs::read_to_string("libdeflate/libdeflate.h").ok()?;
-        let mut major = Option::<u16>::None;
-        let mut minor = Option::<u16>::None;
-
-        // Focus on lines beginning `#define`.
-        for line in raw.lines().filter_map(|line| strip_prefix_and_ws(line, "#define")) {
-            if let Some(rest) = strip_prefix_and_ws(line, "LIBDEFLATE_VERSION_MAJOR") {
-                // What remains should be a number.
-                let num = rest.parse::<u16>().ok()?;
-                major.replace(num);
-                if minor.is_some() { break; }
-                continue;
-            }
-
-            if let Some(rest) = strip_prefix_and_ws(line, "LIBDEFLATE_VERSION_MINOR") {
-                // What remains should be a number.
-                let num = rest.parse::<u16>().ok()?;
-                minor.replace(num);
-                if major.is_some() { break; }
-            }
-        }
-
-        let major = major?;
-        let minor = minor?;
-        Some(format!("{major}.{minor}"))
-    }
-
-    // Determine the version we'd otherwise be linking against.
-    if let Some(version) = libdeflate_version() {
-        // The crate version should begin the same way; if not pop an alert so
-        // the maintainer can fix that.
-        if ! env!("CARGO_PKG_VERSION").starts_with(&format!("{version}.")) {
-            println!(
-                "cargo:warning=Crate ({}) and vendor ({version}) versions mismatch.",
-                env!("CARGO_PKG_VERSION"),
-            );
-        }
-
-        // Look for a matching system copy!
-        pkg_config::Config::new()
-            .print_system_libs(false)
-            .cargo_metadata(true)
-            .exactly_version(&version)
-            .probe("libdeflate")
-            .is_ok()
-    }
-    else {
-        // Version parsing shouldn't ever fail; pop a warning to alert the
-        // maintainer if it does!
-        println!("cargo:warning=Failed to parse vendored MAJOR/MINOR versions.");
-        false
-    }
 }

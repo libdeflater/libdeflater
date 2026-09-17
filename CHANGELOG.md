@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Upcoming Release]
 
+## [1.26.1]
+
 - `libdeflate-sys`'s `dynamic` build now specifies a libdeflate of
   `.atlest_version("1.23")` (previously: `.exactly_version("1.24")`, which
   should make the bindings compile-able against a wider range of

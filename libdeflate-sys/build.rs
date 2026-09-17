@@ -9,11 +9,14 @@ fn main() {
     if pkg_config::Config::new()
         .print_system_libs(false)
         .cargo_metadata(true)
-        .exactly_version("1.24")
+        .atleast_version("1.23")
         .probe("libdeflate")
         .is_ok()
     {
         return;
+    }
+    else {
+        println!("cargo:warning=Dynamic linking failed; falling back to static build.");
     }
 
     let mut build = cc::Build::new();
